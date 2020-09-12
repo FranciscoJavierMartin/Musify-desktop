@@ -1,5 +1,8 @@
 @import './scss/index.scss';
 
+body {
+  color: $font-grey;
+}
 
 .Toastify {
   .Toastify__toast-container--top-center {

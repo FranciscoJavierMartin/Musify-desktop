@@ -4,13 +4,14 @@ import { ToastContainer } from 'react-toastify';
 import firebase from './utils/firebase';
 import 'firebase/auth';
 import Auth from './pages/Auth/Auth';
+import LoggedLayout from './Layouts/LoggedLayout/LoggedLayout';
 
 const App: React.FC = () => {
   const [user, setUser] = useState<firebase.User | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   firebase.auth().onAuthStateChanged((currentUser) => {
-    if(!currentUser?.emailVerified){
+    if (!currentUser?.emailVerified) {
       firebase.auth().signOut();
       setUser(null);
     } else {
@@ -27,7 +28,7 @@ const App: React.FC = () => {
           <Loader size='massive'>Loading</Loader>
         </Dimmer>
       ) : user ? (
-        <h1>User logged</h1>
+        <LoggedLayout user={user}/>
       ) : (
         <Auth />
       )}
