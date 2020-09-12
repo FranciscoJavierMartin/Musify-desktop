@@ -1,6 +1,8 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import { Grid } from 'semantic-ui-react';
-
+import MenuLeft from '../../components/MenuLeft/MenuLeft';
+import Routes from '../../routes/Routes';
 import './LoggedLayout.scss';
 
 interface ILoggedLayoutProps {
@@ -12,11 +14,13 @@ const LoggedLayout: React.FC<ILoggedLayoutProps> = ({ user }) => {
     <Grid className='logged-layout'>
       <Grid.Row>
         <Grid.Column width={3}>
-          <h2>MenuLeft</h2>
+          <MenuLeft />
         </Grid.Column>
         <Grid.Column className='content' width={13}>
           <h2>TopBar</h2>
-          <h2>Content</h2>
+          <BrowserRouter>
+            <Routes />
+          </BrowserRouter>
         </Grid.Column>
       </Grid.Row>
       <Grid.Row>
