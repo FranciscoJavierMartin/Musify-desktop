@@ -9,6 +9,7 @@ import LoggedLayout from './Layouts/LoggedLayout/LoggedLayout';
 const App: React.FC = () => {
   const [user, setUser] = useState<firebase.User | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [reloadApp, setReloadApp] = useState<boolean>(false);
 
   firebase.auth().onAuthStateChanged((currentUser) => {
     if (!currentUser?.emailVerified) {
@@ -28,7 +29,7 @@ const App: React.FC = () => {
           <Loader size='massive'>Loading</Loader>
         </Dimmer>
       ) : user ? (
-        <LoggedLayout user={user} />
+        <LoggedLayout user={user} setReloadApp={setReloadApp}/>
       ) : (
         <Auth />
       )}

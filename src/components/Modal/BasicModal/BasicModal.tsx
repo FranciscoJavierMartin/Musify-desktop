@@ -5,7 +5,7 @@ import './BasicModal.scss';
 
 interface IBasicModalProps {
   show: boolean;
-  setShow: (show: boolean) => void;
+  setShow: React.Dispatch<React.SetStateAction<boolean>>;
   title: string;
 }
 

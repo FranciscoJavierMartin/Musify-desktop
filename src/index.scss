@@ -17,7 +17,45 @@ body {
     background-color: $background-primary;
 
     .Toastify__close--button {
+    }
+  }
+}
 
+.ui.form {
+  .field {
+    .input {
+      input {
+        background-color: $background-grey-lighter;
+        font-size: 16px;
+        color: $font-light;
+        border: 0;
+
+        &:hover,
+        &active,
+        &focus {
+          background-color: $background-grey-lighter-hover;
+          color: $font-light;
+          border: 0;
+        }
+      }
+      
+      i {
+        color: $font-light;
+      }
+    }
+  }
+
+  .ui.button {
+    width: 100%;
+    margin-top: 20px;
+    background-color: $primary-color;
+    color: $font-light;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 50px;
+
+    &:hover {
+      background-color: $primary-color-hover;
     }
   }
 }

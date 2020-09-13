@@ -5,8 +5,8 @@ import './ButtonResetSendEmailVerification.scss';
 
 interface IButtonResetSendEmailVerificationProps {
   user: firebase.User | null;
-  setIsLoading: (isLoading: boolean) => void;
-  setIsUserActive: (isActive: boolean) => void;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+  setIsUserActive: React.Dispatch<React.SetStateAction<boolean>>;
   handleErrors: (code: string) => void;
 }
 

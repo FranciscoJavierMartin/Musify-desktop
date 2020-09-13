@@ -10,7 +10,7 @@ import './LoginForm.scss';
 import ButtonResetSendEmailVerification from '../ButtonResetSendEmailVerification/ButtonResetSendEmailVerification';
 
 interface ILoginFormProps {
-  setSelectedForm: (selectedForm: authSelectedForm) => void;
+  setSelectedForm: React.Dispatch<React.SetStateAction<authSelectedForm>>;
 }
 
 interface IFormData {

@@ -9,7 +9,7 @@ import { authSelectedForm } from '../../../constants/enums';
 import './RegisterForm.scss';
 
 interface IRegisterFormProps {
-  setSelectedForm: (selectedForm: authSelectedForm) => void;
+  setSelectedForm: React.Dispatch<React.SetStateAction<authSelectedForm>>;
 }
 
 interface IFormData {

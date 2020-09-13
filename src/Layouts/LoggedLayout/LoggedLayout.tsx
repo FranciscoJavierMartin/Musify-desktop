@@ -8,9 +8,10 @@ import './LoggedLayout.scss';
 
 interface ILoggedLayoutProps {
   user: firebase.User;
+  setReloadApp: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const LoggedLayout: React.FC<ILoggedLayoutProps> = ({ user }) => {
+const LoggedLayout: React.FC<ILoggedLayoutProps> = ({ user, setReloadApp }) => {
   return (
     <BrowserRouter>
       <Grid className='logged-layout'>
@@ -20,7 +21,7 @@ const LoggedLayout: React.FC<ILoggedLayoutProps> = ({ user }) => {
           </Grid.Column>
           <Grid.Column className='content' width={13}>
             <TopBar user={user} />
-            <Routes />
+            <Routes user={user} setReloadApp={setReloadApp}/>
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>

@@ -4,7 +4,7 @@ import { authSelectedForm } from '../../../constants/enums';
 import './AuthOptions.scss';
 
 interface IAuthOptionsProps {
-  setSelectedForm: (selectedForm: authSelectedForm) => void;
+  setSelectedForm: React.Dispatch<React.SetStateAction<authSelectedForm>>;
 }
 
 const AuthOptions: React.FC<IAuthOptionsProps> = ({ setSelectedForm }) => {

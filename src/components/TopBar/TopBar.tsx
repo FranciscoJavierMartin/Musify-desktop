@@ -27,7 +27,7 @@ const TopBar: React.FC<ITopBarProp> = ({ user, history }) => {
       </div>
       <div className='top-bar__right'>
         <Link to={SETTINGS_ROUTE}>
-          <Image src={UserImage} />
+          <Image src={user.photoURL || UserImage} />
           {user.displayName}
         </Link>
         <Icon name='power off' onClick={logout} />
