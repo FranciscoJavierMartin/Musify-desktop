@@ -28,7 +28,7 @@ const App: React.FC = () => {
           <Loader size='massive'>Loading</Loader>
         </Dimmer>
       ) : user ? (
-        <LoggedLayout user={user}/>
+        <LoggedLayout user={user} />
       ) : (
         <Auth />
       )}

@@ -6,29 +6,29 @@ import Routes from '../../routes/Routes';
 import './LoggedLayout.scss';
 
 interface ILoggedLayoutProps {
-  user: firebase.User | null;
+  user: firebase.User;
 }
 
 const LoggedLayout: React.FC<ILoggedLayoutProps> = ({ user }) => {
   return (
-    <Grid className='logged-layout'>
-      <Grid.Row>
-        <Grid.Column width={3}>
-          <MenuLeft />
-        </Grid.Column>
-        <Grid.Column className='content' width={13}>
-          <h2>TopBar</h2>
-          <BrowserRouter>
+    <BrowserRouter>
+      <Grid className='logged-layout'>
+        <Grid.Row>
+          <Grid.Column width={3}>
+            <MenuLeft user={user} />
+          </Grid.Column>
+          <Grid.Column className='content' width={13}>
+            <h2>TopBar</h2>
             <Routes />
-          </BrowserRouter>
-        </Grid.Column>
-      </Grid.Row>
-      <Grid.Row>
-        <Grid.Column width={16}>
-          <h2>Player</h2>
-        </Grid.Column>
-      </Grid.Row>
-    </Grid>
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column width={16}>
+            <h2>Player</h2>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    </BrowserRouter>
   );
 };
 

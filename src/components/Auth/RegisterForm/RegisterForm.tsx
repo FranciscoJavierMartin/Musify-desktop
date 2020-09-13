@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Button, Icon, Form, Input } from 'semantic-ui-react';
 import { toast } from 'react-toastify';
 import 'firebase/auth';
-import { validateEmail } from '../../../utils/Validations';
+import { validateEmail } from '../../../utils/validations';
 import firebase from '../../../utils/firebase';
+import { authSelectedForm } from '../../../constants/enums';
 
 import './RegisterForm.scss';
-import { authSelectedForm } from '../../../constants/enums';
 
 interface IRegisterFormProps {
   setSelectedForm: (selectedForm: authSelectedForm) => void;
@@ -100,7 +100,7 @@ const RegisterForm: React.FC<IRegisterFormProps> = ({ setSelectedForm }) => {
       .auth()
       .currentUser?.sendEmailVerification()
       .then(() => {
-        toast.success('An verification email has been sent.')
+        toast.success('An verification email has been sent.');
       })
       .catch(() => {
         toast.error('Error on verification email.');

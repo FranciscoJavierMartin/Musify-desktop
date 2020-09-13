@@ -3,3 +3,8 @@ export enum authSelectedForm {
   REGISTER,
   AUTH_OPTIONS,
 }
+
+export enum modalType {
+  NEW_ARTIST,
+  NEW_SONG,
+}

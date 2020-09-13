@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Button, Icon, Form, Input } from 'semantic-ui-react';
 import { toast } from 'react-toastify';
-import { validateEmail } from '../../../utils/Validations';
+import { validateEmail } from '../../../utils/validations';
 import firebase from '../../../utils/firebase';
+
 import { authSelectedForm } from '../../../constants/enums';
 
 import './LoginForm.scss';
@@ -119,7 +120,9 @@ const LoginForm: React.FC<ILoginFormProps> = ({ setSelectedForm }) => {
             <span className='error-text'>Password too short</span>
           )}
         </Form.Field>
-        <Button type='submit' loading={isLoading}>Log In</Button>
+        <Button type='submit' loading={isLoading}>
+          Log In
+        </Button>
       </Form>
 
       {!isUserActive && (
