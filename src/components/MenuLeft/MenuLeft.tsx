@@ -44,6 +44,10 @@ const MenuLeft: React.FC<IMenuLeftProps> = ({ user, location }) => {
   };
 
   useEffect(() => {
+    setactiveMenu(location.pathname);
+  }, [location]);
+
+  useEffect(() => {
     getIsUserAdmin(user.uid).then((response) => {
       setIsUserAdmin(response);
     });

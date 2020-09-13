@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Grid } from 'semantic-ui-react';
 import MenuLeft from '../../components/MenuLeft/MenuLeft';
+import TopBar from '../../components/TopBar/TopBar';
 import Routes from '../../routes/Routes';
 import './LoggedLayout.scss';
 
@@ -18,7 +19,7 @@ const LoggedLayout: React.FC<ILoggedLayoutProps> = ({ user }) => {
             <MenuLeft user={user} />
           </Grid.Column>
           <Grid.Column className='content' width={13}>
-            <h2>TopBar</h2>
+            <TopBar user={user} />
             <Routes />
           </Grid.Column>
         </Grid.Row>
