@@ -15,7 +15,7 @@ const UserPassword: React.FC<IUserPasswordProps> = ({
 }) => {
   const onEdit = (): void => {
     setModalTitle('Update Password');
-    setModalContent(<ChangePasswordForm />);
+    setModalContent(<ChangePasswordForm setShowModal={setShowModal} />);
     setShowModal(true);
   };
   return (

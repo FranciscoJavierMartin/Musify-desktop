@@ -3,10 +3,11 @@ import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 import { Menu, Icon, MenuItemProps } from 'semantic-ui-react';
 import BasicModal from '../Modal/BasicModal/BasicModal';
 import { getIsUserAdmin } from '../../utils/api';
-import { ARTIST_ROUTE, HOME_ROUTE } from '../../constants/routes';
+import { ARTISTS_ROUTE, HOME_ROUTE } from '../../constants/routes';
 
 import './MenuLeft.scss';
 import { modalType } from '../../constants/enums';
+import AddArtistForm from '../Artists/AddArtistForm/AddArtistForm';
 
 interface IMenuLeftProps extends RouteComponentProps {
   user: firebase.User;
@@ -27,7 +28,7 @@ const MenuLeft: React.FC<IMenuLeftProps> = ({ user, location }) => {
     switch (type) {
       case modalType.NEW_ARTIST:
         setModalTitle('New artist');
-        setModalContent(<h2>New artist</h2>);
+        setModalContent(<AddArtistForm setShowModal={setShowModal} />);
         setShowModal(true);
         break;
       case modalType.NEW_SONG:
@@ -67,8 +68,8 @@ const MenuLeft: React.FC<IMenuLeftProps> = ({ user, location }) => {
           </Menu.Item>
           <Menu.Item
             as={Link}
-            to={ARTIST_ROUTE}
-            active={activeMenu === ARTIST_ROUTE}
+            to={ARTISTS_ROUTE}
+            active={activeMenu === ARTISTS_ROUTE}
             onClick={handlerMenu}
           >
             <Icon name='music' /> Artists
