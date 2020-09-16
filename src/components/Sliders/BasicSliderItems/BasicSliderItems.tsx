@@ -1,5 +1,5 @@
 import React from 'react';
-import { map } from 'lodash';
+import { map, size } from 'lodash';
 import Slider from 'react-slick';
 import './BasicSliderItems.scss';
 import BasicSlide from '../BasicSlide/BasicSlide';
@@ -21,7 +21,7 @@ const BasicSliderItems: React.FC<IBasicSlideItemsProps> = ({ data, title, folder
     className: 'basic-slider-items__list',
   };
 
-  return (
+  return size(data) < 3 ? null : (
     <div className='basic-slider-items'>
       <h2>{title}</h2>
       <Slider {...settings}>

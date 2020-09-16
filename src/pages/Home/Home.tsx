@@ -6,14 +6,20 @@ import firebase from '../../utils/firebase';
 import 'firebase/firestore';
 
 import './Home.scss';
-import { ARTISTS_COLLECTION_NAME, ARTISTS_FOLDER_NAME } from '../../constants/firebase';
+import {
+  ALBUMS_COLLECTION_NAME,
+  ALBUMS_FOLDER_NAME,
+  ARTISTS_COLLECTION_NAME,
+  ARTISTS_FOLDER_NAME,
+} from '../../constants/firebase';
 import BasicSliderItems from '../../components/Sliders/BasicSliderItems/BasicSliderItems';
-import { ARTIST_ROUTE } from '../../constants/routes';
+import { ALBUM_ROUTE, ARTIST_ROUTE } from '../../constants/routes';
 
 const db = firebase.firestore();
 
 const Home = () => {
   const [artists, setArtists] = useState<any[]>([]);
+  const [albums, setAlbums] = useState<any[]>([]);
 
   useEffect(() => {
     db.collection(ARTISTS_COLLECTION_NAME)
@@ -26,11 +32,37 @@ const Home = () => {
         setArtists(arrayArtists);
       });
   }, []);
+
+  useEffect(() => {
+    db.collection(ALBUMS_COLLECTION_NAME)
+      .get()
+      .then((response) => {
+        const arrayAlbums = map(response?.docs, (album) => ({
+          ...album.data(),
+          id: album.id,
+        }));
+
+        setAlbums(arrayAlbums);
+      });
+  }, []);
+
   return (
     <>
       <BannerHome />
-      <BasicSliderItems title='Last artists' data={artists} folderImage={ARTISTS_FOLDER_NAME} urlName={ARTIST_ROUTE}/>
-      <div className='home'></div>
+      <div className='home'>
+        <BasicSliderItems
+          title='Last artists'
+          data={artists}
+          folderImage={ARTISTS_FOLDER_NAME}
+          urlName={ARTIST_ROUTE}
+        />
+        <BasicSliderItems
+          title='Last albums'
+          data={albums}
+          folderImage={ALBUMS_FOLDER_NAME}
+          urlName={ALBUM_ROUTE}
+        />
+      </div>
     </>
   );
 };

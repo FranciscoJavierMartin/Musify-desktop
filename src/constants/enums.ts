@@ -7,4 +7,5 @@ export enum authSelectedForm {
 export enum modalType {
   NEW_ARTIST,
   NEW_SONG,
+  NEW_ALBUM,
 }
