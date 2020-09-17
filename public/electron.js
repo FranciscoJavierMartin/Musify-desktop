@@ -9,8 +9,11 @@ var path_1 = require("path");
 var mainWindow;
 function createWindow() {
     mainWindow = new electron_1.BrowserWindow({
-        width: 900,
-        height: 680
+        width: 1400,
+        height: 900,
+        kiosk: false,
+        title: 'Musify',
+        titleBarStyle: 'hiddenInset',
     });
     mainWindow.loadURL(electron_is_dev_1["default"] ? 'http://localhost:3000' : "file://" + path_1.join(__dirname, '../build/index.html'));
     if (electron_is_dev_1["default"]) {
