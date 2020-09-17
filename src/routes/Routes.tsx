@@ -18,16 +18,25 @@ import Album from '../pages/Album/Album';
 interface IRoutesProps {
   user: firebase.User;
   setReloadApp: React.Dispatch<React.SetStateAction<boolean>>;
+  playSong: (albumImage: string, songName: string, songUrl: string) => void;
 }
 
-const Routes: React.FC<IRoutesProps> = ({ user, setReloadApp }) => {
+const Routes: React.FC<IRoutesProps> = ({ user, setReloadApp, playSong }) => {
   return (
     <Switch>
-      <Route path={HOME_ROUTE} exact component={Home} />
+      <Route
+        path={HOME_ROUTE}
+        exact
+        render={() => <Home playSong={playSong} />}
+      />
       <Route path={ALBUMS_ROUTE} exact component={Albums} />
-      <Route path={`${ALBUM_ROUTE}/:id`} exact component={Album} />
+      <Route path={`${ALBUM_ROUTE}/:id`} exact render={() => <Album playSong={playSong}/>} />
       <Route path={ARTISTS_ROUTE} exact component={Artists} />
-      <Route path={`${ARTIST_ROUTE}/:id`} exact component={Artist} />
+      <Route
+        path={`${ARTIST_ROUTE}/:id`}
+        exact
+        render={() => <Artist playSong={playSong} />}
+      />
       <Route
         path={SETTINGS_ROUTE}
         exact

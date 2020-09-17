@@ -11,15 +11,22 @@ import {
   ALBUMS_FOLDER_NAME,
   ARTISTS_COLLECTION_NAME,
   ARTISTS_FOLDER_NAME,
+  SONGS_COLLECTION_NAME,
 } from '../../constants/firebase';
 import BasicSliderItems from '../../components/Sliders/BasicSliderItems/BasicSliderItems';
 import { ALBUM_ROUTE, ARTIST_ROUTE } from '../../constants/routes';
+import SongsSlider from '../../components/Sliders/SongsSlider/SongsSlider';
 
 const db = firebase.firestore();
 
-const Home = () => {
+interface IHomeProps {
+  playSong: (albumImage: string, songName: string, songUrl: string) => void;
+}
+
+const Home: React.FC<IHomeProps> = ({playSong}) => {
   const [artists, setArtists] = useState<any[]>([]);
   const [albums, setAlbums] = useState<any[]>([]);
+  const [songs, setSongs] = useState<any[]>([]);
 
   useEffect(() => {
     db.collection(ARTISTS_COLLECTION_NAME)
@@ -46,6 +53,15 @@ const Home = () => {
       });
   }, []);
 
+  useEffect(() => {
+    db.collection(SONGS_COLLECTION_NAME).limit(10).get().then(response => {
+      setSongs(map(response?.docs, song => ({
+        ...song.data(),
+        id: song.id
+      })))
+    })
+  })
+
   return (
     <>
       <BannerHome />
@@ -61,6 +77,11 @@ const Home = () => {
           data={albums}
           folderImage={ALBUMS_FOLDER_NAME}
           urlName={ALBUM_ROUTE}
+        />
+        <SongsSlider
+        title='Last songs'
+        data={songs}
+        playSong={playSong}
         />
       </div>
     </>

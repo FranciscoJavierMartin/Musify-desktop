@@ -3,6 +3,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { map } from 'lodash';
 import BannerArtist from '../../components/Artists/BannerArtist/BannerArtist';
 import BasicSliderItems from '../../components/Sliders/BasicSliderItems/BasicSliderItems';
+import SongsSlider from '../../components/Sliders/SongsSlider/SongsSlider';
 
 import firebase from '../../utils/firebase';
 import 'firebase/firestore';
@@ -20,13 +21,16 @@ interface IArtistParamProps {
   id: string;
 }
 
-interface IArtistProps extends RouteComponentProps<IArtistParamProps> {}
+interface IArtistProps extends RouteComponentProps<IArtistParamProps> {
+  playSong: (albumImage: string, songName: string, songUrl: string) => void;
+}
 
 const db = firebase.firestore();
 
-const Artist: React.FC<IArtistProps> = ({ match }) => {
+const Artist: React.FC<IArtistProps> = ({ match, playSong }) => {
   const [artist, setArtist] = useState<any>(null);
   const [albums, setAlbums] = useState<any[]>([]);
+  const [songs, setSongs] = useState<any[]>([]);
 
   useEffect(() => {
     db.collection(ARTISTS_COLLECTION_NAME)
@@ -43,7 +47,6 @@ const Artist: React.FC<IArtistProps> = ({ match }) => {
         .where('artist', '==', artist.id)
         .get()
         .then((response) => {
-          
           setAlbums(
             map(response?.docs, (album) => ({
               ...album.data(),
@@ -54,6 +57,28 @@ const Artist: React.FC<IArtistProps> = ({ match }) => {
     }
   }, [artist]);
 
+  useEffect(() => {
+    const arraySongs: any[] = [];
+
+    (async () => {
+      await Promise.all(
+        map(albums, async (album) => {
+          await db
+            .collection(ARTISTS_COLLECTION_NAME)
+            .where('album', '==', album.id)
+            .get()
+            .then((response) => {
+              map(response?.docs, (song) => {
+                const data = song.data();
+                data.id = song.id;
+                arraySongs.push(data);
+              });
+            });
+        })
+      );
+      setSongs(arraySongs);
+    })();
+  }, [albums]);
   return (
     <div className='artist'>
       {artist && <BannerArtist artist={artist} />}
@@ -64,6 +89,7 @@ const Artist: React.FC<IArtistProps> = ({ match }) => {
         folderImage={ALBUMS_FOLDER_NAME}
         urlName={ALBUM_ROUTE}
       />
+      <SongsSlider title='Songs' data={songs} playSong={playSong}/>
     </div>
   );
 };

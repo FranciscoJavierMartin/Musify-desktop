@@ -9,6 +9,7 @@ import { ALBUMS_ROUTE, ARTISTS_ROUTE, HOME_ROUTE } from '../../constants/routes'
 import { modalType } from '../../constants/enums';
 
 import './MenuLeft.scss';
+import AddSongForm from '../Songs/AddSongForm/AddSongForm';
 
 interface IMenuLeftProps extends RouteComponentProps {
   user: firebase.User;
@@ -34,7 +35,7 @@ const MenuLeft: React.FC<IMenuLeftProps> = ({ user, location }) => {
         break;
       case modalType.NEW_SONG:
         setModalTitle('New song');
-        setModalContent(<h2>New song</h2>);
+        setModalContent(<AddSongForm setShowModal={setShowModal}/>);
         setShowModal(true);
         break;
       case modalType.NEW_ALBUM:

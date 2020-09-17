@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Loader } from 'semantic-ui-react';
 import AlbumHeader from '../../components/Albums/AlbumHeader/AlbumHeader';
+import ListSongs from '../../components/Songs/ListSongs/ListSongs';
 
 import firebase from '../../utils/firebase';
 import 'firebase/firestore';
@@ -10,9 +11,11 @@ import {
   ALBUMS_COLLECTION_NAME,
   ALBUMS_FOLDER_NAME,
   ARTISTS_COLLECTION_NAME,
+  SONGS_COLLECTION_NAME,
 } from '../../constants/firebase';
 
 import './Album.scss';
+import { map } from 'lodash';
 
 const db = firebase.firestore();
 
@@ -20,12 +23,15 @@ interface IAlbumRouteParams {
   id: string;
 }
 
-interface IAlbumProps extends RouteComponentProps<IAlbumRouteParams> {}
+interface IAlbumProps extends RouteComponentProps<IAlbumRouteParams> {
+  playSong: (albumImage: string, songName: string, songUrl: string) => void;
+}
 
-const Album: React.FC<IAlbumProps> = ({ match }) => {
+const Album: React.FC<IAlbumProps> = ({ match, playSong }) => {
   const [album, setAlbum] = useState<any>();
   const [imageUrl, setImageUrl] = useState<string>('');
   const [artist, setArtist] = useState<any>();
+  const [songs, setSongs] = useState<any[]>([]);
 
   useEffect(() => {
     db.collection(ALBUMS_COLLECTION_NAME)
@@ -65,6 +71,22 @@ const Album: React.FC<IAlbumProps> = ({ match }) => {
     }
   }, [album]);
 
+  useEffect(() => {
+    if (album) {
+      db.collection(SONGS_COLLECTION_NAME)
+        .where('album', '==', album.id)
+        .get()
+        .then((response) => {
+          setSongs(
+            map(response?.docs, (song) => ({
+              ...song.data(),
+              id: song.id,
+            }))
+          );
+        });
+    }
+  }, [album]);
+
   return !album || !artist ? (
     <Loader active>Loading...</Loader>
   ) : (
@@ -77,7 +99,7 @@ const Album: React.FC<IAlbumProps> = ({ match }) => {
         />
       </div>
       <div className='album__songs'>
-        <p>Songs list</p>
+        <ListSongs songs={songs} albumImage={imageUrl} playSong={playSong}/>
       </div>
     </div>
   );
